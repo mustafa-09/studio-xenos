@@ -1,7 +1,17 @@
 "use client";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 
 export default function Home() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
   return (
     <>
       {/* HERO */}
@@ -12,8 +22,8 @@ export default function Home() {
         justifyContent: "center",
         alignItems: "center",
         textAlign: "center",
-        padding: "0 2rem",
-        paddingTop: "140px",
+        padding: isMobile ? "0 1.5rem" : "0 2rem",
+        paddingTop: isMobile ? "120px" : "140px",
         position: "relative",
         overflow: "hidden",
       }}>
@@ -23,8 +33,8 @@ export default function Home() {
           top: "20%",
           left: "50%",
           transform: "translateX(-50%)",
-          width: "600px",
-          height: "600px",
+          width: isMobile ? "300px" : "600px",
+          height: isMobile ? "300px" : "600px",
           background: "radial-gradient(circle, rgba(124,58,237,0.25) 0%, transparent 70%)",
           pointerEvents: "none",
         }} />
@@ -32,8 +42,8 @@ export default function Home() {
           position: "absolute",
           bottom: "10%",
           right: "10%",
-          width: "400px",
-          height: "400px",
+          width: isMobile ? "200px" : "400px",
+          height: isMobile ? "200px" : "400px",
           background: "radial-gradient(circle, rgba(34,211,238,0.1) 0%, transparent 70%)",
           pointerEvents: "none",
         }} />
@@ -41,7 +51,7 @@ export default function Home() {
         {/* Headline */}
         <h1 style={{
           fontFamily: "Space Grotesk, sans-serif",
-          fontSize: "clamp(3rem, 7vw, 6.5rem)",
+          fontSize: isMobile ? "clamp(2.2rem, 10vw, 3.5rem)" : "clamp(3rem, 7vw, 6.5rem)",
           fontWeight: 700,
           lineHeight: 1.05,
           letterSpacing: "-0.03em",
@@ -60,16 +70,23 @@ export default function Home() {
         {/* Subheading */}
         <p style={{
           color: "var(--muted)",
-          fontSize: "1.1rem",
+          fontSize: isMobile ? "0.95rem" : "1.1rem",
           lineHeight: 1.7,
-          maxWidth: "540px",
+          maxWidth: isMobile ? "100%" : "540px",
           marginBottom: "2.5rem",
+          padding: isMobile ? "0 0.5rem" : "0",
         }}>
           Unlock your business potential with bespoke designs, mobile apps, and websites crafted for growth.
         </p>
 
         {/* CTAs */}
-        <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", justifyContent: "center" }}>
+        <div style={{
+          display: "flex",
+          gap: "1rem",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          width: isMobile ? "100%" : "auto",
+        }}>
           <Link href="/contact" style={{
             background: "linear-gradient(135deg, #7C3AED, #A855F7)",
             color: "white",
@@ -79,6 +96,8 @@ export default function Home() {
             fontSize: "0.95rem",
             textDecoration: "none",
             boxShadow: "0 0 30px rgba(124,58,237,0.4)",
+            flex: isMobile ? "1" : "none",
+            textAlign: "center",
           }}>Request a Quote</Link>
 
           <Link href="/services" style={{
@@ -90,13 +109,15 @@ export default function Home() {
             fontSize: "0.95rem",
             textDecoration: "none",
             border: "1px solid rgba(255,255,255,0.15)",
+            flex: isMobile ? "1" : "none",
+            textAlign: "center",
           }}>Our Services</Link>
         </div>
 
         {/* Stats */}
         <div style={{
           display: "flex",
-          gap: "3rem",
+          gap: isMobile ? "1.5rem" : "3rem",
           marginTop: "5rem",
           flexWrap: "wrap",
           justifyContent: "center",
@@ -110,20 +131,21 @@ export default function Home() {
             <div key={i} style={{ textAlign: "center" }}>
               <div style={{
                 fontFamily: "Space Grotesk, sans-serif",
-                fontSize: "2rem",
+                fontSize: isMobile ? "1.5rem" : "2rem",
                 fontWeight: 700,
                 background: "linear-gradient(135deg, #A855F7, #22D3EE)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
               }}>{stat.num}</div>
-              <div style={{ fontSize: "0.8rem", color: "var(--muted)", marginTop: "0.25rem" }}>{stat.label}</div>
+              <div style={{ fontSize: "0.75rem", color: "var(--muted)", marginTop: "0.25rem" }}>{stat.label}</div>
             </div>
           ))}
         </div>
       </section>
+
       {/* SERVICES SECTION */}
       <section style={{
-        padding: "8rem 3rem",
+        padding: isMobile ? "5rem 1.5rem" : "8rem 3rem",
         textAlign: "center",
       }}>
         <p style={{ color: "#A855F7", fontSize: "0.8rem", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "1rem" }}>What We Offer</p>
@@ -140,7 +162,7 @@ export default function Home() {
 
         <div style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+          gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fit, minmax(260px, 1fr))",
           gap: "1.5rem",
           maxWidth: "1100px",
           margin: "0 auto",
@@ -192,7 +214,7 @@ export default function Home() {
 
       {/* HOW WE WORK */}
       <section style={{
-        padding: "8rem 3rem",
+        padding: isMobile ? "5rem 1.5rem" : "8rem 3rem",
         background: "var(--surface)",
         textAlign: "center",
       }}>
@@ -210,7 +232,7 @@ export default function Home() {
 
         <div style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+          gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fit, minmax(220px, 1fr))",
           gap: "1.5rem",
           maxWidth: "900px",
           margin: "0 auto",
@@ -262,7 +284,7 @@ export default function Home() {
 
       {/* CTA BANNER */}
       <section style={{
-        padding: "8rem 3rem",
+        padding: isMobile ? "5rem 1.5rem" : "8rem 3rem",
         textAlign: "center",
         position: "relative",
         overflow: "hidden",
@@ -290,7 +312,7 @@ export default function Home() {
             WebkitTextFillColor: "transparent",
           }}>extraordinary?</span>
         </h2>
-        <p style={{ color: "var(--muted)", fontSize: "1rem", marginBottom: "2.5rem" }}>
+        <p style={{ color: "var(--muted)", fontSize: isMobile ? "0.9rem" : "1rem", marginBottom: "2.5rem" }}>
           Let's talk about your project and make it happen.
         </p>
         <Link href="/contact" style={{

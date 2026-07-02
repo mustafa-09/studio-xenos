@@ -21,23 +21,16 @@ export default function Navbar() {
   useEffect(() => {
     const handleScroll = () => {
       const current = window.scrollY;
-      if (current < 10) {
-        setVisible(true);
-      } else if (current > lastScroll) {
-        setVisible(false);
-        setMenuOpen(false);
-      } else {
-        setVisible(true);
-      }
+      if (current < 10) setVisible(true);
+      else if (current > lastScroll) { setVisible(false); setMenuOpen(false); }
+      else setVisible(true);
       setLastScroll(current);
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScroll]);
 
-  useEffect(() => {
-    setMenuOpen(false);
-  }, [pathname]);
+  useEffect(() => { setMenuOpen(false); }, [pathname]);
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
@@ -46,14 +39,13 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="nav-padding" style={{
+      <nav className="navbar-container" style={{
         position: "fixed",
         top: 0, left: 0, right: 0,
         zIndex: 100,
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        padding: "1rem 3rem",
         background: "rgba(5, 5, 8, 0.6)",
         backdropFilter: "blur(20px)",
         WebkitBackdropFilter: "blur(20px)",
@@ -64,17 +56,10 @@ export default function Navbar() {
       }}>
 
         <Link href="/" style={{ display: "flex", alignItems: "center", textDecoration: "none", zIndex: 101 }}>
-          <Image
-            src="/StudioX.png"
-            alt="Studio Xenos"
-            width={100}
-            height={30}
-            style={{ objectFit: "contain" }}
-            priority
-          />
+          <Image src="/StudioX.png" alt="Studio Xenos" width={100} height={30} style={{ objectFit: "contain" }} priority />
         </Link>
 
-        <ul className="desktop-nav">
+        <ul className="navbar-links">
           {links.map(link => {
             const isActive = pathname === link.href;
             return (
@@ -86,12 +71,8 @@ export default function Navbar() {
                   fontWeight: isActive ? 600 : 400,
                   transition: "color 0.2s",
                 }}
-                onMouseEnter={e => {
-                  if (!isActive) e.currentTarget.style.color = "rgba(255,255,255,0.8)";
-                }}
-                onMouseLeave={e => {
-                  if (!isActive) e.currentTarget.style.color = "rgba(255,255,255,0.45)";
-                }}
+                onMouseEnter={e => { if (!isActive) e.currentTarget.style.color = "rgba(255,255,255,0.8)"; }}
+                onMouseLeave={e => { if (!isActive) e.currentTarget.style.color = "rgba(255,255,255,0.45)"; }}
                 >
                   {link.label}
                 </Link>
@@ -100,7 +81,7 @@ export default function Navbar() {
           })}
         </ul>
 
-        <Link className="desktop-cta" href="/contact" style={{
+        <Link className="navbar-cta-desktop" href="/contact" style={{
           background: "linear-gradient(135deg, #7C3AED, #A855F7)",
           color: "white",
           padding: "0.7rem 1.8rem",
@@ -118,48 +99,18 @@ export default function Navbar() {
           Get In Touch
         </Link>
 
-        <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
-          <span style={{
-            display: "block",
-            width: "22px",
-            height: "2px",
-            background: "white",
-            borderRadius: "2px",
-            transition: "all 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
-            transform: menuOpen ? "rotate(45deg) translate(5px, 5px)" : "none",
-          }} />
-          <span style={{
-            display: "block",
-            width: "16px",
-            height: "2px",
-            background: "rgba(255,255,255,0.5)",
-            borderRadius: "2px",
-            transition: "all 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
-            opacity: menuOpen ? 0 : 1,
-          }} />
-          <span style={{
-            display: "block",
-            width: "22px",
-            height: "2px",
-            background: "white",
-            borderRadius: "2px",
-            transition: "all 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
-            transform: menuOpen ? "rotate(-45deg) translate(5px, -5px)" : "none",
-          }} />
+        <button className="navbar-hamburger" onClick={() => setMenuOpen(!menuOpen)}>
+          <span style={{ display: "block", width: "22px", height: "2px", background: "white", borderRadius: "2px", transition: "all 0.35s cubic-bezier(0.4, 0, 0.2, 1)", transform: menuOpen ? "rotate(45deg) translate(5px, 5px)" : "none" }} />
+          <span style={{ display: "block", width: "16px", height: "2px", background: "rgba(255,255,255,0.5)", borderRadius: "2px", transition: "all 0.35s cubic-bezier(0.4, 0, 0.2, 1)", opacity: menuOpen ? 0 : 1 }} />
+          <span style={{ display: "block", width: "22px", height: "2px", background: "white", borderRadius: "2px", transition: "all 0.35s cubic-bezier(0.4, 0, 0.2, 1)", transform: menuOpen ? "rotate(-45deg) translate(5px, -5px)" : "none" }} />
         </button>
       </nav>
 
-      <div className="mobile-overlay" style={{
+      <div className="navbar-mobile-menu" style={{
         transform: menuOpen ? "translateX(0)" : "translateX(100%)",
         transition: "transform 0.45s cubic-bezier(0.4, 0, 0.2, 1)",
       }}>
-        <p style={{
-          fontSize: "0.7rem",
-          letterSpacing: "0.2em",
-          textTransform: "uppercase",
-          color: "rgba(255,255,255,0.3)",
-          marginBottom: "2.5rem",
-        }}>Navigation</p>
+        <p style={{ fontSize: "0.7rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: "2.5rem" }}>Navigation</p>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem", width: "100%", marginBottom: "3rem" }}>
           {links.map((link) => {
@@ -175,16 +126,12 @@ export default function Navbar() {
                 lineHeight: 1.2,
                 padding: "0.4rem 0",
                 borderBottom: "1px solid rgba(255,255,255,0.06)",
-                transition: "color 0.2s",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
               }}>
                 {link.label}
-                <span style={{
-                  fontSize: "1.2rem",
-                  color: isActive ? "#A855F7" : "rgba(255,255,255,0.2)",
-                }}>↗</span>
+                <span style={{ fontSize: "1.2rem", color: isActive ? "#A855F7" : "rgba(255,255,255,0.2)" }}>↗</span>
               </Link>
             );
           })}
@@ -207,13 +154,7 @@ export default function Navbar() {
 
         <div style={{ marginTop: "3rem", display: "flex", gap: "1.5rem" }}>
           {["Instagram", "LinkedIn", "Behance", "Dribbble"].map(s => (
-            <a key={s} href="#" style={{
-              fontSize: "0.75rem",
-              letterSpacing: "0.08em",
-              color: "rgba(255,255,255,0.3)",
-              textDecoration: "none",
-              textTransform: "uppercase",
-            }}>{s}</a>
+            <a key={s} href="#" style={{ fontSize: "0.75rem", letterSpacing: "0.08em", color: "rgba(255,255,255,0.3)", textDecoration: "none", textTransform: "uppercase" }}>{s}</a>
           ))}
         </div>
       </div>

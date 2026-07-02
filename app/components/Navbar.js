@@ -46,21 +46,6 @@ export default function Navbar() {
 
   return (
     <>
-      <style>{`
-        .desktop-nav { display: flex; }
-        .desktop-cta { display: inline-block; }
-        .hamburger { display: none; }
-        .mobile-overlay { display: none; }
-
-        @media (max-width: 768px) {
-          .desktop-nav { display: none !important; }
-          .desktop-cta { display: none !important; }
-          .hamburger { display: flex !important; }
-          .mobile-overlay { display: flex !important; }
-          .nav-padding { padding: 1rem 1.5rem !important; }
-        }
-      `}</style>
-
       <nav className="nav-padding" style={{
         position: "fixed",
         top: 0, left: 0, right: 0,
@@ -78,7 +63,6 @@ export default function Navbar() {
         transition: "transform 0.9s cubic-bezier(0.4, 0, 0.2, 1)",
       }}>
 
-        {/* Logo */}
         <Link href="/" style={{ display: "flex", alignItems: "center", textDecoration: "none", zIndex: 101 }}>
           <Image
             src="/StudioX.png"
@@ -90,15 +74,7 @@ export default function Navbar() {
           />
         </Link>
 
-        {/* Desktop nav links */}
-        <ul className="desktop-nav" style={{
-          position: "absolute",
-          left: "50%",
-          transform: "translateX(-50%)",
-          gap: "2rem",
-          listStyle: "none",
-          alignItems: "center",
-        }}>
+        <ul className="desktop-nav">
           {links.map(link => {
             const isActive = pathname === link.href;
             return (
@@ -124,7 +100,6 @@ export default function Navbar() {
           })}
         </ul>
 
-        {/* Desktop CTA */}
         <Link className="desktop-cta" href="/contact" style={{
           background: "linear-gradient(135deg, #7C3AED, #A855F7)",
           color: "white",
@@ -143,22 +118,7 @@ export default function Navbar() {
           Get In Touch
         </Link>
 
-        {/* Hamburger button */}
-        <button
-          className="hamburger"
-          onClick={() => setMenuOpen(!menuOpen)}
-          style={{
-            background: "rgba(255,255,255,0.05)",
-            border: "1px solid rgba(255,255,255,0.1)",
-            borderRadius: "10px",
-            padding: "0.5rem 0.65rem",
-            flexDirection: "column",
-            justifyContent: "center",
-            gap: "5px",
-            zIndex: 101,
-            backdropFilter: "blur(10px)",
-          }}
-        >
+        <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
           <span style={{
             display: "block",
             width: "22px",
@@ -189,18 +149,7 @@ export default function Navbar() {
         </button>
       </nav>
 
-      {/* Mobile menu overlay */}
       <div className="mobile-overlay" style={{
-        position: "fixed",
-        top: 0, left: 0, right: 0, bottom: 0,
-        background: "rgba(5,5,8,0.98)",
-        backdropFilter: "blur(24px)",
-        WebkitBackdropFilter: "blur(24px)",
-        zIndex: 99,
-        flexDirection: "column",
-        alignItems: "flex-start",
-        justifyContent: "center",
-        padding: "2rem 2.5rem",
         transform: menuOpen ? "translateX(0)" : "translateX(100%)",
         transition: "transform 0.45s cubic-bezier(0.4, 0, 0.2, 1)",
       }}>

@@ -22,8 +22,7 @@ export default function Home() {
         justifyContent: "center",
         alignItems: "center",
         textAlign: "center",
-        padding: isMobile ? "0 1.5rem" : "0 2rem",
-        paddingTop: isMobile ? "120px" : "140px",
+        padding: isMobile ? "80px 1.5rem 3rem" : "0 2rem",
         position: "relative",
         overflow: "hidden",
       }}>
@@ -118,7 +117,7 @@ export default function Home() {
         <div style={{
           display: "flex",
           gap: isMobile ? "1.5rem" : "3rem",
-          marginTop: "5rem",
+          marginTop: isMobile ? "3rem" : "5rem",
           flexWrap: "wrap",
           justifyContent: "center",
         }}>
@@ -145,7 +144,7 @@ export default function Home() {
 
       {/* SERVICES SECTION */}
       <section style={{
-        padding: isMobile ? "5rem 1.5rem" : "8rem 3rem",
+        padding: isMobile ? "4rem 1.5rem" : "8rem 3rem",
         textAlign: "center",
       }}>
         <p style={{ color: "#A855F7", fontSize: "0.8rem", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "1rem" }}>What We Offer</p>
@@ -214,7 +213,7 @@ export default function Home() {
 
       {/* HOW WE WORK */}
       <section style={{
-        padding: isMobile ? "5rem 1.5rem" : "8rem 3rem",
+        padding: isMobile ? "4rem 1.5rem" : "8rem 3rem",
         background: "var(--surface)",
         textAlign: "center",
       }}>
@@ -284,7 +283,7 @@ export default function Home() {
 
       {/* CTA BANNER */}
       <section style={{
-        padding: isMobile ? "5rem 1.5rem" : "8rem 3rem",
+        padding: isMobile ? "4rem 1.5rem" : "8rem 3rem",
         textAlign: "center",
         position: "relative",
         overflow: "hidden",

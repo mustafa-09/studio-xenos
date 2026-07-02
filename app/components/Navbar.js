@@ -43,10 +43,15 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScroll]);
 
-  // Close menu on route change
   useEffect(() => {
     setMenuOpen(false);
   }, [pathname]);
+
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [menuOpen]);
 
   return (
     <>
@@ -142,40 +147,44 @@ export default function Navbar() {
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             style={{
-              background: "none",
-              border: "none",
-              padding: "0.5rem",
+              background: "rgba(255,255,255,0.05)",
+              border: "1px solid rgba(255,255,255,0.1)",
+              borderRadius: "10px",
+              padding: "0.5rem 0.65rem",
               display: "flex",
               flexDirection: "column",
+              justifyContent: "center",
               gap: "5px",
               zIndex: 101,
+              backdropFilter: "blur(10px)",
             }}
           >
             <span style={{
               display: "block",
-              width: "24px",
+              width: "22px",
               height: "2px",
               background: "white",
               borderRadius: "2px",
-              transition: "all 0.3s",
+              transition: "all 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
               transform: menuOpen ? "rotate(45deg) translate(5px, 5px)" : "none",
             }} />
             <span style={{
               display: "block",
-              width: "24px",
+              width: "16px",
               height: "2px",
-              background: "white",
+              background: "rgba(255,255,255,0.5)",
               borderRadius: "2px",
-              transition: "all 0.3s",
+              transition: "all 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
               opacity: menuOpen ? 0 : 1,
+              transform: menuOpen ? "translateX(10px)" : "none",
             }} />
             <span style={{
               display: "block",
-              width: "24px",
+              width: "22px",
               height: "2px",
               background: "white",
               borderRadius: "2px",
-              transition: "all 0.3s",
+              transition: "all 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
               transform: menuOpen ? "rotate(-45deg) translate(5px, -5px)" : "none",
             }} />
           </button>
@@ -187,53 +196,96 @@ export default function Navbar() {
         <div style={{
           position: "fixed",
           top: 0, left: 0, right: 0, bottom: 0,
-          background: "rgba(5,5,8,0.97)",
-          backdropFilter: "blur(20px)",
-          WebkitBackdropFilter: "blur(20px)",
+          background: "rgba(5,5,8,0.98)",
+          backdropFilter: "blur(24px)",
+          WebkitBackdropFilter: "blur(24px)",
           zIndex: 99,
           display: "flex",
           flexDirection: "column",
-          alignItems: "center",
+          alignItems: "flex-start",
           justifyContent: "center",
-          gap: "2rem",
+          padding: "2rem 2.5rem",
+          gap: "0",
           transform: menuOpen ? "translateX(0)" : "translateX(100%)",
-          transition: "transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+          transition: "transform 0.45s cubic-bezier(0.4, 0, 0.2, 1)",
         }}>
-          {links.map(link => {
-            const isActive = pathname === link.href;
-            return (
-              <Link key={link.href} href={link.href} style={{
-                color: isActive ? "white" : "rgba(255,255,255,0.5)",
-                textDecoration: "none",
-                fontSize: "1.8rem",
-                fontFamily: "Space Grotesk, sans-serif",
-                fontWeight: 700,
-                letterSpacing: "-0.02em",
-                transition: "color 0.2s",
-              }}
-              onMouseEnter={e => e.currentTarget.style.color = "white"}
-              onMouseLeave={e => {
-                if (!isActive) e.currentTarget.style.color = "rgba(255,255,255,0.5)";
-              }}
-              >
-                {link.label}
-              </Link>
-            );
-          })}
 
+          {/* Menu label */}
+          <p style={{
+            fontSize: "0.7rem",
+            letterSpacing: "0.2em",
+            textTransform: "uppercase",
+            color: "rgba(255,255,255,0.3)",
+            marginBottom: "2.5rem",
+          }}>Navigation</p>
+
+          {/* Nav links */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem", width: "100%", marginBottom: "3rem" }}>
+            {links.map((link, i) => {
+              const isActive = pathname === link.href;
+              return (
+                <Link key={link.href} href={link.href} style={{
+                  color: isActive ? "white" : "rgba(255,255,255,0.4)",
+                  textDecoration: "none",
+                  fontSize: "2.5rem",
+                  fontFamily: "Space Grotesk, sans-serif",
+                  fontWeight: 700,
+                  letterSpacing: "-0.03em",
+                  lineHeight: 1.2,
+                  padding: "0.4rem 0",
+                  borderBottom: "1px solid rgba(255,255,255,0.06)",
+                  transition: "color 0.2s",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+                onMouseEnter={e => e.currentTarget.style.color = "white"}
+                onMouseLeave={e => {
+                  if (!isActive) e.currentTarget.style.color = "rgba(255,255,255,0.4)";
+                }}
+                >
+                  {link.label}
+                  <span style={{
+                    fontSize: "1.2rem",
+                    color: isActive ? "#A855F7" : "rgba(255,255,255,0.2)",
+                  }}>↗</span>
+                </Link>
+              );
+            })}
+          </div>
+
+          {/* CTA */}
           <Link href="/contact" style={{
             background: "linear-gradient(135deg, #7C3AED, #A855F7)",
             color: "white",
-            padding: "0.85rem 2.5rem",
+            padding: "1rem 2.5rem",
             borderRadius: "12px",
             fontWeight: 700,
             fontSize: "1rem",
             textDecoration: "none",
-            boxShadow: "0 0 25px rgba(124,58,237,0.45)",
-            marginTop: "1rem",
+            boxShadow: "0 0 30px rgba(124,58,237,0.45)",
+            width: "100%",
+            textAlign: "center",
           }}>
             Get In Touch
           </Link>
+
+          {/* Bottom socials */}
+          <div style={{
+            marginTop: "3rem",
+            display: "flex",
+            gap: "1.5rem",
+          }}>
+            {["Instagram", "LinkedIn", "Behance", "Dribbble"].map(s => (
+              <a key={s} href="#" style={{
+                fontSize: "0.75rem",
+                letterSpacing: "0.08em",
+                color: "rgba(255,255,255,0.3)",
+                textDecoration: "none",
+                textTransform: "uppercase",
+              }}>{s}</a>
+            ))}
+          </div>
         </div>
       )}
     </>

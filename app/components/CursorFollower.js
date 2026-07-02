@@ -5,8 +5,20 @@ export default function CursorFollower() {
   const [cursor, setCursor] = useState({ x: -100, y: -100 });
   const [ball, setBall] = useState({ x: -100, y: -100 });
   const [hovered, setHovered] = useState(false);
+  const [isTouch, setIsTouch] = useState(false);
 
   useEffect(() => {
+    // Hide on touch devices
+    const checkTouch = () => {
+      setIsTouch(window.matchMedia("(pointer: coarse)").matches);
+    };
+    checkTouch();
+    window.addEventListener("resize", checkTouch);
+    return () => window.removeEventListener("resize", checkTouch);
+  }, []);
+
+  useEffect(() => {
+    if (isTouch) return;
     const move = (e) => {
       setCursor({ x: e.clientX, y: e.clientY });
       const el = document.elementFromPoint(e.clientX, e.clientY);
@@ -20,9 +32,10 @@ export default function CursorFollower() {
     };
     window.addEventListener("mousemove", move);
     return () => window.removeEventListener("mousemove", move);
-  }, []);
+  }, [isTouch]);
 
   useEffect(() => {
+    if (isTouch) return;
     let frame;
     const follow = () => {
       setBall(prev => ({
@@ -33,7 +46,10 @@ export default function CursorFollower() {
     };
     frame = requestAnimationFrame(follow);
     return () => cancelAnimationFrame(frame);
-  }, [cursor]);
+  }, [cursor, isTouch]);
+
+  // Don't render on touch devices
+  if (isTouch) return null;
 
   const size = hovered ? 50 : 25;
 

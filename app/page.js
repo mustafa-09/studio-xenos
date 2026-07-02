@@ -13,6 +13,7 @@ export default function Home() {
         textAlign: "center",
         position: "relative",
         overflow: "hidden",
+        paddingTop: "5rem", // ← added extra top padding
       }}>
         <div className="glow-1" style={{ position: "absolute", top: "20%", left: "50%", transform: "translateX(-50%)", background: "radial-gradient(circle, rgba(124,58,237,0.25) 0%, transparent 70%)", pointerEvents: "none" }} />
         <div className="glow-2" style={{ position: "absolute", bottom: "10%", right: "10%", background: "radial-gradient(circle, rgba(34,211,238,0.1) 0%, transparent 70%)", pointerEvents: "none" }} />

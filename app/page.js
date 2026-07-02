@@ -1,56 +1,144 @@
 "use client";
 import Link from "next/link";
-import { useState, useEffect } from "react";
 
 export default function Home() {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
-
   return (
     <>
+      <style>{`
+        .hero-section {
+          padding: 0 2rem;
+        }
+        .hero-title {
+          font-size: clamp(3rem, 7vw, 6.5rem);
+        }
+        .hero-subtitle {
+          font-size: 1.1rem;
+          max-width: 540px;
+          padding: 0;
+        }
+        .hero-cta-wrapper {
+          width: auto;
+        }
+        .hero-cta-btn {
+          flex: none;
+        }
+        .hero-stats {
+          gap: 3rem;
+          margin-top: 5rem;
+        }
+        .hero-stat-num {
+          font-size: 2rem;
+        }
+        .glow-1 {
+          width: 600px;
+          height: 600px;
+        }
+        .glow-2 {
+          width: 400px;
+          height: 400px;
+        }
+        .services-section {
+          padding: 8rem 3rem;
+        }
+        .services-grid {
+          grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        }
+        .howwework-section {
+          padding: 8rem 3rem;
+        }
+        .howwework-grid {
+          grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        }
+        .cta-section {
+          padding: 8rem 3rem;
+        }
+        .cta-subtitle {
+          font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+          .hero-section {
+            padding: 80px 1.5rem 3rem;
+          }
+          .hero-title {
+            font-size: clamp(2.2rem, 10vw, 3.5rem);
+          }
+          .hero-subtitle {
+            font-size: 0.95rem;
+            max-width: 100%;
+            padding: 0 0.5rem;
+          }
+          .hero-cta-wrapper {
+            width: 100%;
+          }
+          .hero-cta-btn {
+            flex: 1;
+          }
+          .hero-stats {
+            gap: 1.5rem;
+            margin-top: 3rem;
+          }
+          .hero-stat-num {
+            font-size: 1.5rem;
+          }
+          .glow-1 {
+            width: 300px;
+            height: 300px;
+          }
+          .glow-2 {
+            width: 200px;
+            height: 200px;
+          }
+          .services-section {
+            padding: 4rem 1.5rem;
+          }
+          .services-grid {
+            grid-template-columns: 1fr;
+          }
+          .howwework-section {
+            padding: 4rem 1.5rem;
+          }
+          .howwework-grid {
+            grid-template-columns: 1fr;
+          }
+          .cta-section {
+            padding: 4rem 1.5rem;
+          }
+          .cta-subtitle {
+            font-size: 0.9rem;
+          }
+        }
+      `}</style>
+
       {/* HERO */}
-      <section style={{
+      <section className="hero-section" style={{
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
         textAlign: "center",
-        padding: isMobile ? "80px 1.5rem 3rem" : "0 2rem",
         position: "relative",
         overflow: "hidden",
       }}>
-        {/* Purple glow bg */}
-        <div style={{
+        <div className="glow-1" style={{
           position: "absolute",
           top: "20%",
           left: "50%",
           transform: "translateX(-50%)",
-          width: isMobile ? "300px" : "600px",
-          height: isMobile ? "300px" : "600px",
           background: "radial-gradient(circle, rgba(124,58,237,0.25) 0%, transparent 70%)",
           pointerEvents: "none",
         }} />
-        <div style={{
+        <div className="glow-2" style={{
           position: "absolute",
           bottom: "10%",
           right: "10%",
-          width: isMobile ? "200px" : "400px",
-          height: isMobile ? "200px" : "400px",
           background: "radial-gradient(circle, rgba(34,211,238,0.1) 0%, transparent 70%)",
           pointerEvents: "none",
         }} />
 
-        {/* Headline */}
-        <h1 style={{
+        <h1 className="hero-title" style={{
           fontFamily: "Space Grotesk, sans-serif",
-          fontSize: isMobile ? "clamp(2.2rem, 10vw, 3.5rem)" : "clamp(3rem, 7vw, 6.5rem)",
           fontWeight: 700,
           lineHeight: 1.05,
           letterSpacing: "-0.03em",
@@ -66,27 +154,21 @@ export default function Home() {
           Business
         </h1>
 
-        {/* Subheading */}
-        <p style={{
+        <p className="hero-subtitle" style={{
           color: "var(--muted)",
-          fontSize: isMobile ? "0.95rem" : "1.1rem",
           lineHeight: 1.7,
-          maxWidth: isMobile ? "100%" : "540px",
           marginBottom: "2.5rem",
-          padding: isMobile ? "0 0.5rem" : "0",
         }}>
           Unlock your business potential with bespoke designs, mobile apps, and websites crafted for growth.
         </p>
 
-        {/* CTAs */}
-        <div style={{
+        <div className="hero-cta-wrapper" style={{
           display: "flex",
           gap: "1rem",
           flexWrap: "wrap",
           justifyContent: "center",
-          width: isMobile ? "100%" : "auto",
         }}>
-          <Link href="/contact" style={{
+          <Link className="hero-cta-btn" href="/contact" style={{
             background: "linear-gradient(135deg, #7C3AED, #A855F7)",
             color: "white",
             padding: "0.85rem 2.2rem",
@@ -95,11 +177,10 @@ export default function Home() {
             fontSize: "0.95rem",
             textDecoration: "none",
             boxShadow: "0 0 30px rgba(124,58,237,0.4)",
-            flex: isMobile ? "1" : "none",
             textAlign: "center",
           }}>Request a Quote</Link>
 
-          <Link href="/services" style={{
+          <Link className="hero-cta-btn" href="/services" style={{
             background: "rgba(255,255,255,0.05)",
             color: "white",
             padding: "0.85rem 2.2rem",
@@ -108,16 +189,12 @@ export default function Home() {
             fontSize: "0.95rem",
             textDecoration: "none",
             border: "1px solid rgba(255,255,255,0.15)",
-            flex: isMobile ? "1" : "none",
             textAlign: "center",
           }}>Our Services</Link>
         </div>
 
-        {/* Stats */}
-        <div style={{
+        <div className="hero-stats" style={{
           display: "flex",
-          gap: isMobile ? "1.5rem" : "3rem",
-          marginTop: isMobile ? "3rem" : "5rem",
           flexWrap: "wrap",
           justifyContent: "center",
         }}>
@@ -128,9 +205,8 @@ export default function Home() {
             { num: "100%", label: "Client Satisfaction" },
           ].map((stat, i) => (
             <div key={i} style={{ textAlign: "center" }}>
-              <div style={{
+              <div className="hero-stat-num" style={{
                 fontFamily: "Space Grotesk, sans-serif",
-                fontSize: isMobile ? "1.5rem" : "2rem",
                 fontWeight: 700,
                 background: "linear-gradient(135deg, #A855F7, #22D3EE)",
                 WebkitBackgroundClip: "text",
@@ -143,10 +219,7 @@ export default function Home() {
       </section>
 
       {/* SERVICES SECTION */}
-      <section style={{
-        padding: isMobile ? "4rem 1.5rem" : "8rem 3rem",
-        textAlign: "center",
-      }}>
+      <section className="services-section" style={{ textAlign: "center" }}>
         <p style={{ color: "#A855F7", fontSize: "0.8rem", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "1rem" }}>What We Offer</p>
         <h2 style={{
           fontFamily: "Space Grotesk, sans-serif",
@@ -159,9 +232,8 @@ export default function Home() {
           Everything you need to build a powerful digital presence — under one roof.
         </p>
 
-        <div style={{
+        <div className="services-grid" style={{
           display: "grid",
-          gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fit, minmax(260px, 1fr))",
           gap: "1.5rem",
           maxWidth: "1100px",
           margin: "0 auto",
@@ -212,8 +284,7 @@ export default function Home() {
       </section>
 
       {/* HOW WE WORK */}
-      <section style={{
-        padding: isMobile ? "4rem 1.5rem" : "8rem 3rem",
+      <section className="howwework-section" style={{
         background: "var(--surface)",
         textAlign: "center",
       }}>
@@ -229,9 +300,8 @@ export default function Home() {
           A simple, transparent process built around your goals.
         </p>
 
-        <div style={{
+        <div className="howwework-grid" style={{
           display: "grid",
-          gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fit, minmax(220px, 1fr))",
           gap: "1.5rem",
           maxWidth: "900px",
           margin: "0 auto",
@@ -282,8 +352,7 @@ export default function Home() {
       </section>
 
       {/* CTA BANNER */}
-      <section style={{
-        padding: isMobile ? "4rem 1.5rem" : "8rem 3rem",
+      <section className="cta-section" style={{
         textAlign: "center",
         position: "relative",
         overflow: "hidden",
@@ -311,7 +380,7 @@ export default function Home() {
             WebkitTextFillColor: "transparent",
           }}>extraordinary?</span>
         </h2>
-        <p style={{ color: "var(--muted)", fontSize: isMobile ? "0.9rem" : "1rem", marginBottom: "2.5rem" }}>
+        <p className="cta-subtitle" style={{ color: "var(--muted)", marginBottom: "2.5rem" }}>
           Let's talk about your project and make it happen.
         </p>
         <Link href="/contact" style={{
